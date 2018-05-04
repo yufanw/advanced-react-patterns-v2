@@ -7,35 +7,28 @@ import {Switch} from '../switch'
 
 class Toggle extends React.Component {
   // 🐨 this toggle component is going to need to have state for `on`
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      on: false
-    };
-    this.toggle = this.toggle.bind(this);
-  }
   // You'll also want a method to handle when the switch is clicked
   // which will update the `on` state and call the `onToggle` prop
   // with the new `on` state.
   //
   // 💰 this.setState(newState, callback)
-  toggle(e) {
-    e.preventDefault();
-    this.setState(prevState => ({
-      on: !prevState.on
-    }));
+  state = { on: false };
+  toggle = () => {
+    this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onToggle(this.state.on)
+    );
   }
   // The `callback` should be where you call `this.props.onToggle(this.state.on)`
   //
   // 💯 Use a state updater function for `newState` to avoid issues with batching
   render() {
     // 🐨 here you'll want to return the switch with the `on` and `onClick` props
-    
+    const {on} = this.state;
     return (
       <Switch 
         onClick={this.toggle}
-        on={this.state.on}
+        on={on}
       />
     );
   }
